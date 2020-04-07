@@ -69,8 +69,7 @@ var timezoneOffset = Date.parse("january 1970");
         var texts = [];
         linkParents.map(i => texts.push($(linkParents[i]).text()));
 
-        var monthlyInflation = [];
-        var yearlyInflation = [];
+        var inflation = [];
 
         texts.forEach(t => {
             var lines = t.replace(/\n/g, '\\n').trim().split('\\n').map(i=>i.trim()).filter(i=>i != "");
@@ -83,10 +82,12 @@ var timezoneOffset = Date.parse("january 1970");
             var yPeriodParsed = yPeriod.map(i => Date.parse(i)-timezoneOffset)
             var yPercent = lines[3];
 
-            monthlyInflation.push({period: mPeriod, periodParsed: mPeriodParsed, percent: mPercent});
-            yearlyInflation.push({period: yPeriod, periodParsed: yPeriodParsed, percent: yPercent});
+            inflation.push({
+                monthly:{period: mPeriod, periodParsed: mPeriodParsed, percent: mPercent}, 
+                yearly : {period: yPeriod, periodParsed: yPeriodParsed, percent: yPercent} 
+            });
         });
 
-        return { monthlyInflation, yearlyInflation };
+        return inflation;
     }
 })();
